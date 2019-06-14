@@ -1,17 +1,13 @@
 package com.franchini.datamodel;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class Receipt {
 
-  private List<Purchase> purchases;
-  private BigDecimal salesTaxes;
-  private BigDecimal total;
+  private List<ReceiptItem> receiptItems;
 
-  public void addPurchase(Purchase purchase) {
-    purchases.add(purchase);
-    total = total.add(purchase.getPrice());
+  public void addReceiptItem(ReceiptItem receiptItem) {
+    receiptItems.add(receiptItem);
   }
 
 }

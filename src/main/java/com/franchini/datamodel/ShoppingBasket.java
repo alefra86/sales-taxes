@@ -8,13 +8,13 @@ import java.util.List;
  */
 public class ShoppingBasket {
 
-  private List<Purchase> purchases;
+  private List<ShoppingBasketItem> shoppingBasketItems;
 
-  public void addPurchase(Purchase purchase) {
-    purchases.add(purchase);
+  public void addPurchase(ShoppingBasketItem shoppingBasketItem) {
+    shoppingBasketItems.add(shoppingBasketItem);
   }
 
-  public List<Purchase> getPurchases() {
-    return Collections.unmodifiableList(purchases);
+  public List<ShoppingBasketItem> getShoppingBasketItems() {
+    return Collections.unmodifiableList(shoppingBasketItems);
   }
 }
