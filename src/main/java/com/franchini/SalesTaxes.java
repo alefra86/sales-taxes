@@ -14,7 +14,7 @@ public class SalesTaxes {
       throw new IllegalArgumentException("Receipt not available. No items in your shopping cart.");
     }
     Receipt receipt = new Receipt();
-    shoppingCart.getItems().forEach(i -> receipt.addReceiptItem(ReceiptItem.from(i)));
+    shoppingCart.getItems().forEach(shoppingCartItem -> receipt.addReceiptItem(ReceiptItem.from(shoppingCartItem)));
     return receipt;
   }
 
