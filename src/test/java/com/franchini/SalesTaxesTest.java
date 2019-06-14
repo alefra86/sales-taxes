@@ -33,4 +33,13 @@ public class SalesTaxesTest {
     Receipt receipt = sut.createReceipt(shoppingCart);
     Assert.assertEquals(shoppingCart.size(), receipt.size());
   }
+
+  @Test
+  public void itemsWithoutTaxesReturnsTheSumOfTheirPrices() {
+    ShoppingCart shoppingCart = new ShoppingCart();
+    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem("item1"), BigDecimal.ONE));
+    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem("item2"), BigDecimal.ONE));
+    Receipt receipt = sut.createReceipt(shoppingCart);
+    Assert.assertEquals(new BigDecimal("2"), receipt.getTotal());
+  }
 }

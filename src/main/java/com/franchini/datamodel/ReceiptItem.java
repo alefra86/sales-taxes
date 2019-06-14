@@ -18,4 +18,7 @@ public class ReceiptItem {
     return BigDecimal.ZERO;
   }
 
+  public BigDecimal getTotalPrice() {
+    return shoppingCartItem.getPrice();
+  }
 }

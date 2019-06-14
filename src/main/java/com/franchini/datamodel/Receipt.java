@@ -1,5 +1,6 @@
 package com.franchini.datamodel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,4 +16,7 @@ public class Receipt {
     return receiptItems.size();
   }
 
+  public BigDecimal getTotal() {
+    return receiptItems.stream().map(ReceiptItem::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
 }
