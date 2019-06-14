@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 
 public class ReceiptItem {
 
-  private final ShoppingBasketItem shoppingBasketItem;
+  private final ShoppingCartItem shoppingCartItem;
 
-  private ReceiptItem(ShoppingBasketItem shoppingBasketItem) {
-    this.shoppingBasketItem = shoppingBasketItem;
+  private ReceiptItem(ShoppingCartItem shoppingCartItem) {
+    this.shoppingCartItem = shoppingCartItem;
   }
 
-  public static ReceiptItem from(ShoppingBasketItem shoppingBasketItem) {
-    return new ReceiptItem(shoppingBasketItem);
+  public static ReceiptItem from(ShoppingCartItem shoppingCartItem) {
+    return new ReceiptItem(shoppingCartItem);
   }
 
   public BigDecimal getTax() {
