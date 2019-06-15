@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Item {
 
+  public final static String IMPORTED_LABEL = "imported";
   private final String desc;
   private final boolean imported;
 
@@ -53,6 +54,6 @@ public class Item {
 
   @Override
   public String toString() {
-    return String.format("Item: %s %s", imported ? "imported " : "", desc);
+    return String.format("%s %s", imported ? IMPORTED_LABEL : "", desc).trim();
   }
 }

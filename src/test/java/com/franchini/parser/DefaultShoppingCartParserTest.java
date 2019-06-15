@@ -1,5 +1,6 @@
 package com.franchini.parser;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -33,6 +34,15 @@ public class DefaultShoppingCartParserTest {
     assertEquals(1, shoppingCart.size());
     assertThat(shoppingCart.getItems().get(0),
       samePropertyValuesAs(ShoppingCartItem.of(1, Item.newItem("bottle of perfume"), new BigDecimal("27.99"))));
+  }
+
+  @Test
+  public void importedContentCreatedCorrectItems() throws IOException {
+    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream("imported.txt"));
+    assertEquals(2, shoppingCart.size());
+    assertThat(shoppingCart.getItems(),
+      contains(samePropertyValuesAs(ShoppingCartItem.of(1, Item.newImportedItem("bottle of perfume"), new BigDecimal("27.99"))),
+        samePropertyValuesAs(ShoppingCartItem.of(1, Item.newImportedItem("box of chocolates"), new BigDecimal("11.25")))));
   }
 
   private InputStream loadFileAsInputStream(String name) throws IOException {

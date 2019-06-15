@@ -41,10 +41,18 @@ public class DefaultShoppingCartParser implements ShoppingCartParser {
         throw new IllegalArgumentException("Wrong content. Please provide a correct one.");
       }
       int quantity = Integer.valueOf(matcher.group(1));
-      String productName = matcher.group(2);
+      Item item = getItem(matcher.group(2));
       BigDecimal price = new BigDecimal(matcher.group(3));
-      shoppingCart.addItem(ShoppingCartItem.of(quantity, Item.newItem(productName), price));
+      shoppingCart.addItem(ShoppingCartItem.of(quantity, item, price));
     });
     return shoppingCart;
+  }
+
+  private Item getItem(String itemDesc) {
+    return itemDesc.contains(Item.IMPORTED_LABEL) ? Item.newImportedItem(clearDesc(itemDesc)) : Item.newItem(itemDesc);
+  }
+
+  private String clearDesc(String itemDesc) {
+    return itemDesc.replace(Item.IMPORTED_LABEL + " ", "").trim();
   }
 }
