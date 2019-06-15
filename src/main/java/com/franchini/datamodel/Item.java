@@ -50,4 +50,9 @@ public class Item {
   public int hashCode() {
     return Objects.hash(getDesc(), isImported());
   }
+
+  @Override
+  public String toString() {
+    return String.format("Item: %s %s", imported ? "imported " : "", desc);
+  }
 }

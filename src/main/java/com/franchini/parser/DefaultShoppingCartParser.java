@@ -1,9 +1,12 @@
 package com.franchini.parser;
 
+import com.franchini.datamodel.Item;
 import com.franchini.datamodel.ShoppingCart;
+import com.franchini.datamodel.ShoppingCartItem;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,12 +34,17 @@ public class DefaultShoppingCartParser implements ShoppingCartParser {
     if (lines.isEmpty()) {
       throw new IllegalArgumentException("Empty shopping cart. Please provide a correct one.");
     }
+    ShoppingCart shoppingCart = new ShoppingCart();
     lines.forEach(line -> {
       Matcher matcher = PATTERN.matcher(line);
       if (!matcher.matches()) {
         throw new IllegalArgumentException("Wrong content. Please provide a correct one.");
       }
+      int quantity = Integer.valueOf(matcher.group(1));
+      String productName = matcher.group(2);
+      BigDecimal price = new BigDecimal(matcher.group(3));
+      shoppingCart.addItem(ShoppingCartItem.of(quantity, Item.newItem(productName), price));
     });
-    return new ShoppingCart();
+    return shoppingCart;
   }
 }
