@@ -1,4 +1,4 @@
-package com.franchini.datamodel;
+package com.franchini.salestaxes.datamodel;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.franchini.datamodel;
+package com.franchini.salestaxes.datamodel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

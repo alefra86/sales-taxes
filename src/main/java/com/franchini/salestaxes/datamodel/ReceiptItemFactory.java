@@ -1,4 +1,4 @@
-package com.franchini.datamodel;
+package com.franchini.salestaxes.datamodel;
 
 /**
  * Creates {@link ReceiptItem} starting from a {@link ShoppingCartItem}

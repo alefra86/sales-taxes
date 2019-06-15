@@ -1,7 +1,7 @@
-package com.franchini;
+package com.franchini.salestaxes;
 
-import com.franchini.parser.ShoppingCartParser;
-import com.franchini.service.ReceiptService;
+import com.franchini.salestaxes.parser.ShoppingCartParser;
+import com.franchini.salestaxes.service.ReceiptService;
 import java.io.InputStream;
 
 /**

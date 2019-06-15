@@ -1,11 +1,12 @@
-package com.franchini;
+package com.franchini.salestaxes;
 
 import static org.junit.Assert.assertEquals;
 
-import com.franchini.datamodel.DefaultReceiptItemFactory;
-import com.franchini.parser.DefaultShoppingCartParser;
-import com.franchini.repository.StubCategoryRepository;
-import com.franchini.service.DefaultReceiptService;
+import com.franchini.salestaxes.SalesTaxes;
+import com.franchini.salestaxes.datamodel.DefaultReceiptItemFactory;
+import com.franchini.salestaxes.parser.DefaultShoppingCartParser;
+import com.franchini.salestaxes.repository.StubCategoryRepository;
+import com.franchini.salestaxes.service.DefaultReceiptService;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;

@@ -1,6 +1,6 @@
-package com.franchini.parser;
+package com.franchini.salestaxes.parser;
 
-import com.franchini.datamodel.ShoppingCart;
+import com.franchini.salestaxes.datamodel.ShoppingCart;
 import java.io.InputStream;
 
 /**

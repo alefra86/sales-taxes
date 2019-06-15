@@ -1,6 +1,6 @@
-package com.franchini.datamodel;
+package com.franchini.salestaxes.datamodel;
 
-import com.franchini.repository.CategoryRepository;
+import com.franchini.salestaxes.repository.CategoryRepository;
 
 /**
  * Default implementation that create a {@link ReceiptItem} and decorate it depending on its tax status.

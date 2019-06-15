@@ -1,13 +1,15 @@
-package com.franchini.service;
+package com.franchini.salestaxes.service;
 
 import static org.junit.Assert.assertEquals;
 
-import com.franchini.datamodel.DefaultReceiptItemFactory;
-import com.franchini.datamodel.Item;
-import com.franchini.datamodel.Receipt;
-import com.franchini.datamodel.ShoppingCart;
-import com.franchini.datamodel.ShoppingCartItem;
-import com.franchini.repository.StubCategoryRepository;
+import com.franchini.salestaxes.datamodel.DefaultReceiptItemFactory;
+import com.franchini.salestaxes.datamodel.Item;
+import com.franchini.salestaxes.datamodel.Receipt;
+import com.franchini.salestaxes.datamodel.ShoppingCart;
+import com.franchini.salestaxes.datamodel.ShoppingCartItem;
+import com.franchini.salestaxes.repository.StubCategoryRepository;
+import com.franchini.salestaxes.service.DefaultReceiptService;
+import com.franchini.salestaxes.service.ReceiptService;
 import java.math.BigDecimal;
 import org.junit.Test;
 

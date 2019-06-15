@@ -1,14 +1,15 @@
-package com.franchini.parser;
+package com.franchini.salestaxes.parser;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import com.franchini.datamodel.Item;
-import com.franchini.datamodel.ShoppingCart;
-import com.franchini.datamodel.ShoppingCartItem;
-import com.franchini.repository.StubCategoryRepository;
+import com.franchini.salestaxes.datamodel.Item;
+import com.franchini.salestaxes.datamodel.ShoppingCart;
+import com.franchini.salestaxes.datamodel.ShoppingCartItem;
+import com.franchini.salestaxes.parser.DefaultShoppingCartParser;
+import com.franchini.salestaxes.repository.StubCategoryRepository;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,9 +1,9 @@
-package com.franchini.parser;
+package com.franchini.salestaxes.parser;
 
-import com.franchini.datamodel.Item;
-import com.franchini.datamodel.ShoppingCart;
-import com.franchini.datamodel.ShoppingCartItem;
-import com.franchini.repository.CategoryRepository;
+import com.franchini.salestaxes.datamodel.Item;
+import com.franchini.salestaxes.datamodel.ShoppingCart;
+import com.franchini.salestaxes.datamodel.ShoppingCartItem;
+import com.franchini.salestaxes.repository.CategoryRepository;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

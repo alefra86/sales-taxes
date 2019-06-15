@@ -1,8 +1,8 @@
-package com.franchini.service;
+package com.franchini.salestaxes.service;
 
-import com.franchini.datamodel.Receipt;
-import com.franchini.datamodel.ReceiptItemFactory;
-import com.franchini.datamodel.ShoppingCart;
+import com.franchini.salestaxes.datamodel.Receipt;
+import com.franchini.salestaxes.datamodel.ReceiptItemFactory;
+import com.franchini.salestaxes.datamodel.ShoppingCart;
 
 /**
  * Service for building a receipt

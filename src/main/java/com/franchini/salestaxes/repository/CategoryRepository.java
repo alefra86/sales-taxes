@@ -1,6 +1,6 @@
-package com.franchini.repository;
+package com.franchini.salestaxes.repository;
 
-import com.franchini.datamodel.Category;
+import com.franchini.salestaxes.datamodel.Category;
 
 /**
  *
