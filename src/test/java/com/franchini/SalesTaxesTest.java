@@ -3,77 +3,58 @@ package com.franchini;
 import static org.junit.Assert.assertEquals;
 
 import com.franchini.datamodel.DefaultReceiptItemFactory;
-import com.franchini.datamodel.Item;
-import com.franchini.datamodel.Receipt;
-import com.franchini.datamodel.ShoppingCart;
-import com.franchini.datamodel.ShoppingCartItem;
+import com.franchini.parser.DefaultShoppingCartParser;
 import com.franchini.repository.StubCategoryRepository;
-import java.math.BigDecimal;
+import com.franchini.service.DefaultReceiptService;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
+import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
 public class SalesTaxesTest {
 
-  public static final String BASICTAX_FREE_ITEM = "book";
-  public static final String TAXED_ITEM = "music CD";
+  private SalesTaxes sut;
 
-  private SalesTaxes sut = new SalesTaxes(new DefaultReceiptItemFactory(new StubCategoryRepository()));
-
-  @Test(expected = IllegalArgumentException.class)
-  public void nullShoppingCartThrowsException() {
-    sut.createReceipt(null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void emptyShoppingCartThrowsException() {
-    sut.createReceipt(new ShoppingCart());
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void shoppingCartWithUnnkownCategoryThrowsException() {
-    sut.createReceipt(new ShoppingCart());
+  @Before
+  public void setUp() throws Exception {
+    StubCategoryRepository categoryRepository = new StubCategoryRepository();
+    sut = new SalesTaxes(new DefaultShoppingCartParser(categoryRepository),
+      new DefaultReceiptService(new DefaultReceiptItemFactory(categoryRepository)));
   }
 
   @Test
-  public void receiveItemsSizeIsEqualToShoppingCartSize() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(BASICTAX_FREE_ITEM), BigDecimal.ZERO));
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(TAXED_ITEM), BigDecimal.ZERO));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(shoppingCart.size(), receipt.size());
+  public void testInput1() throws IOException {
+    String receipt = sut.printReceipt(loadFileAsInputStream("input1.txt", "input"));
+    assertEquals(loadFileAsString("output1.txt"), receipt);
   }
 
   @Test
-  public void testItemsWithoutTaxesApplied() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(BASICTAX_FREE_ITEM), BigDecimal.ONE));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(BigDecimal.ONE, receipt.getTotal());
+  public void testInput2() throws IOException {
+    String receipt = sut.printReceipt(loadFileAsInputStream("input2.txt", "input"));
+    assertEquals(loadFileAsString("output2.txt"), receipt);
   }
 
   @Test
-  public void testImportedExemptItems() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newImportedItem(BASICTAX_FREE_ITEM), new BigDecimal("11.25")));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(new BigDecimal("11.85"), receipt.getTotal());
+  public void testInput3() throws IOException {
+    String receipt = sut.printReceipt(loadFileAsInputStream("input3.txt", "input"));
+    assertEquals(loadFileAsString("output3.txt"), receipt);
   }
 
-  @Test
-  public void testBasicSalesTaxItems() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(TAXED_ITEM), new BigDecimal("18.99")));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(new BigDecimal("20.89"), receipt.getTotal());
+  private InputStream loadFileAsInputStream(String filename, String folder) throws IOException {
+    String path = folder + File.separator + filename;
+    InputStream stream = getClass().getClassLoader().getResourceAsStream(path);
+    if (stream == null) {
+      throw new IOException("File: '" + path + "' cannot be found");
+    }
+    return stream;
   }
 
-  @Test
-  public void testImportedItemsNotExempt() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newImportedItem(TAXED_ITEM), new BigDecimal("47.50")));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(new BigDecimal("54.65"), receipt.getTotal());
+  private String loadFileAsString(String filename) throws IOException {
+    return new BufferedReader(new InputStreamReader(loadFileAsInputStream(filename, "output"))).lines()
+             .collect(Collectors.joining(System.lineSeparator()));
   }
 }

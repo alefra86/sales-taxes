@@ -13,6 +13,16 @@ public abstract class TaxedReceiptItemDecorator implements ReceiptItem {
   }
 
   @Override
+  public int getQuantity() {
+    return receiptItem.getQuantity();
+  }
+
+  @Override
+  public Item getItem() {
+    return receiptItem.getItem();
+  }
+
+  @Override
   public BigDecimal getPrice() {
     return receiptItem.getPrice();
   }

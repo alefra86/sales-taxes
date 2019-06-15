@@ -11,6 +11,16 @@ public class TaxFreeReceiptItem implements ReceiptItem {
   }
 
   @Override
+  public int getQuantity() {
+    return shoppingCartItem.getQuantity();
+  }
+
+  @Override
+  public Item getItem() {
+    return shoppingCartItem.getItem();
+  }
+
+  @Override
   public BigDecimal getPrice() {
     return shoppingCartItem.getPrice();
   }

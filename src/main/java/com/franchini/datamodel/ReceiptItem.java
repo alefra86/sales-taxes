@@ -7,6 +7,10 @@ import java.math.BigDecimal;
  */
 public interface ReceiptItem {
 
+  int getQuantity();
+
+  Item getItem();
+
   BigDecimal getPrice();
 
   BigDecimal getTax();
