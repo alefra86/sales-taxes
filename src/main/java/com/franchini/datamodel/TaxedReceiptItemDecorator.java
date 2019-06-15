@@ -19,12 +19,12 @@ public abstract class TaxedReceiptItemDecorator implements ReceiptItem {
 
   @Override
   public BigDecimal getTax() {
-    return round(getPrice().multiply(getTaxRate()).divide(new BigDecimal("100")));
+    return round(getPrice().multiply(getTaxRate()).divide(new BigDecimal("100"))).add(receiptItem.getTax());
   }
 
   @Override
   public BigDecimal getTotalPrice() {
-    return receiptItem.getTotalPrice().add(getTax());
+    return getPrice().add(getTax());
   }
 
   protected abstract BigDecimal getTaxRate();

@@ -2,11 +2,11 @@ package com.franchini.datamodel;
 
 import java.math.BigDecimal;
 
-public class ReceiptItemImpl implements ReceiptItem {
+public class TaxFreeReceiptItem implements ReceiptItem {
 
   protected final ShoppingCartItem shoppingCartItem;
 
-  public ReceiptItemImpl(ShoppingCartItem shoppingCartItem) {
+  public TaxFreeReceiptItem(ShoppingCartItem shoppingCartItem) {
     this.shoppingCartItem = shoppingCartItem;
   }
 

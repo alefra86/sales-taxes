@@ -15,7 +15,7 @@ public class DefaultReceiptItemFactory implements ReceiptItemFactory {
 
   @Override
   public ReceiptItem getReceiptItem(ShoppingCartItem shoppingCartItem) {
-    ReceiptItem receiptItem = new ReceiptItemImpl(shoppingCartItem);
+    ReceiptItem receiptItem = new TaxFreeReceiptItem(shoppingCartItem);
     if (shoppingCartItem.getItem().isImported()) {
       receiptItem = new ImportedReceiptItem(receiptItem);
     }
