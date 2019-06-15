@@ -16,8 +16,6 @@ public class SalesTaxesTest {
 
   public static final String BASICTAX_FREE_ITEM = "book";
   public static final String TAXED_ITEM = "music CD";
-  public static final String IMPORTED_BASIC_TAX_FREE_ITEM = "imported box of chocolates";
-  public static final String IMPORTED_TAXED_ITEM = "imported bottle of parfume";
 
   private SalesTaxes sut = new SalesTaxes();
 
@@ -44,16 +42,31 @@ public class SalesTaxesTest {
   public void testItemsWithoutTaxesApplied() {
     ShoppingCart shoppingCart = new ShoppingCart();
     shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(BASICTAX_FREE_ITEM), BigDecimal.ONE));
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(TAXED_ITEM), BigDecimal.ONE));
     Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(new BigDecimal("2"), receipt.getTotal());
+    assertEquals(BigDecimal.ONE, receipt.getTotal());
   }
 
   @Test
   public void testImportedExemptItems() {
     ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newImportedItem(IMPORTED_BASIC_TAX_FREE_ITEM), new BigDecimal("11.25")));
+    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newImportedItem(BASICTAX_FREE_ITEM), new BigDecimal("11.25")));
     Receipt receipt = sut.createReceipt(shoppingCart);
     assertEquals(new BigDecimal("11.85"), receipt.getTotal());
+  }
+
+  @Test
+  public void testBasicSalesTaxItems() {
+    ShoppingCart shoppingCart = new ShoppingCart();
+    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(TAXED_ITEM), new BigDecimal("18.99")));
+    Receipt receipt = sut.createReceipt(shoppingCart);
+    assertEquals(new BigDecimal("20.89"), receipt.getTotal());
+  }
+
+  @Test
+  public void testImportedItemsNotExempt() {
+    ShoppingCart shoppingCart = new ShoppingCart();
+    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newImportedItem(TAXED_ITEM), new BigDecimal("47.50")));
+    Receipt receipt = sut.createReceipt(shoppingCart);
+    assertEquals(new BigDecimal("54.65"), receipt.getTotal());
   }
 }
