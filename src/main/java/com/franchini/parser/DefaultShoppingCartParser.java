@@ -3,6 +3,7 @@ package com.franchini.parser;
 import com.franchini.datamodel.Item;
 import com.franchini.datamodel.ShoppingCart;
 import com.franchini.datamodel.ShoppingCartItem;
+import com.franchini.repository.CategoryRepository;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,6 +28,11 @@ import java.util.stream.Collectors;
 public class DefaultShoppingCartParser implements ShoppingCartParser {
 
   private final static Pattern PATTERN = Pattern.compile("^(\\d+) (.+) at (\\S+)$");
+  private final CategoryRepository categoryRepository;
+
+  public DefaultShoppingCartParser(CategoryRepository categoryRepository) {
+    this.categoryRepository = categoryRepository;
+  }
 
   @Override
   public ShoppingCart parse(InputStream inputStream) {
@@ -49,10 +55,16 @@ public class DefaultShoppingCartParser implements ShoppingCartParser {
   }
 
   private Item getItem(String itemDesc) {
-    return itemDesc.contains(Item.IMPORTED_LABEL) ? Item.newImportedItem(clearDesc(itemDesc)) : Item.newItem(itemDesc);
+    boolean isImported = itemDesc.contains(Item.IMPORTED_LABEL);
+    String desc = checkAndClearDesc(itemDesc);
+    return isImported ? Item.newImportedItem(desc) : Item.newItem(desc);
   }
 
-  private String clearDesc(String itemDesc) {
-    return itemDesc.replace(Item.IMPORTED_LABEL + " ", "").trim();
+  private String checkAndClearDesc(String itemDesc) {
+    itemDesc = itemDesc.replace(Item.IMPORTED_LABEL + " ", "").trim();
+    if (categoryRepository.findByProductName(itemDesc) == null) {
+      throw new IllegalArgumentException(String.format("No Category found for %s", itemDesc));
+    }
+    return itemDesc;
   }
 }
