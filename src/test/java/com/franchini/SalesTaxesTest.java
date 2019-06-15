@@ -6,6 +6,7 @@ import com.franchini.datamodel.Item;
 import com.franchini.datamodel.Receipt;
 import com.franchini.datamodel.ShoppingCart;
 import com.franchini.datamodel.ShoppingCartItem;
+import com.franchini.repository.StubCategoryRepository;
 import java.math.BigDecimal;
 import org.junit.Test;
 
@@ -17,16 +18,21 @@ public class SalesTaxesTest {
   public static final String BASICTAX_FREE_ITEM = "book";
   public static final String TAXED_ITEM = "music CD";
 
-  private SalesTaxes sut = new SalesTaxes();
+  private SalesTaxes sut = new SalesTaxes(new StubCategoryRepository());
 
   @Test(expected = IllegalArgumentException.class)
-  public void nullShoppingCartReturnsThrowException() {
+  public void nullShoppingCartThrowsException() {
     sut.createReceipt(null);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void emptyShoppingCartReturnsThrowException() {
-    sut.createReceipt(null);
+  public void emptyShoppingCartThrowsException() {
+    sut.createReceipt(new ShoppingCart());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void shoppingCartWithUnnkownCategoryThrowsException() {
+    sut.createReceipt(new ShoppingCart());
   }
 
   @Test
