@@ -14,6 +14,11 @@ public class DefaultShoppingCartParserTest {
     sut.parse(loadFileAsInputStream("empty.txt"));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void wrongContentReturnsException() throws IOException {
+    sut.parse(loadFileAsInputStream("wrong.txt"));
+  }
+
   private InputStream loadFileAsInputStream(String name) throws IOException {
     String path = "input" + File.separator + name;
     InputStream stream = getClass().getClassLoader().getResourceAsStream(path);
