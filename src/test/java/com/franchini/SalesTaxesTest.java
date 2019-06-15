@@ -2,6 +2,7 @@ package com.franchini;
 
 import static org.junit.Assert.assertEquals;
 
+import com.franchini.datamodel.DefaultReceiptItemFactory;
 import com.franchini.datamodel.Item;
 import com.franchini.datamodel.Receipt;
 import com.franchini.datamodel.ShoppingCart;
@@ -18,7 +19,7 @@ public class SalesTaxesTest {
   public static final String BASICTAX_FREE_ITEM = "book";
   public static final String TAXED_ITEM = "music CD";
 
-  private SalesTaxes sut = new SalesTaxes(new StubCategoryRepository());
+  private SalesTaxes sut = new SalesTaxes(new DefaultReceiptItemFactory(new StubCategoryRepository()));
 
   @Test(expected = IllegalArgumentException.class)
   public void nullShoppingCartThrowsException() {
