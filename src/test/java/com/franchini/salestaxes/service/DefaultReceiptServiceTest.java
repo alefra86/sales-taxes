@@ -1,22 +1,39 @@
 package com.franchini.salestaxes.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
-import com.franchini.salestaxes.datamodel.DefaultReceiptItemFactory;
 import com.franchini.salestaxes.datamodel.Item;
 import com.franchini.salestaxes.datamodel.Receipt;
+import com.franchini.salestaxes.datamodel.ReceiptItemFactory;
 import com.franchini.salestaxes.datamodel.ShoppingCart;
 import com.franchini.salestaxes.datamodel.ShoppingCartItem;
-import com.franchini.salestaxes.repository.StubCategoryRepository;
+import com.franchini.salestaxes.datamodel.StubReceiptItem;
 import java.math.BigDecimal;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultReceiptServiceTest {
 
-  public static final String BASICTAX_FREE_ITEM = "book";
-  public static final String TAXED_ITEM = "music CD";
+  public static final String BOOK = "book";
+  public static final String MUSIC_CD = "music CD";
+  @InjectMocks
+  private DefaultReceiptService sut;
+  @Mock
+  private ReceiptItemFactory receiptItemFactory;
 
-  private DefaultReceiptService sut = new DefaultReceiptService(new DefaultReceiptItemFactory(new StubCategoryRepository()));
+  @Before
+  public void setUp() {
+    when(receiptItemFactory.getReceiptItem(any(ShoppingCartItem.class))).thenReturn(new StubReceiptItem("ITEM"));
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void nullShoppingCartThrowsException() {
@@ -34,43 +51,13 @@ public class DefaultReceiptServiceTest {
   }
 
   @Test
-  public void receiveItemsSizeIsEqualToShoppingCartSize() {
+  public void testReceiptItemAreGeneratedThroughTheFactoryAndAddedToTheReceipt() {
     ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(BASICTAX_FREE_ITEM), BigDecimal.ZERO));
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(TAXED_ITEM), BigDecimal.ZERO));
+    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(BOOK), BigDecimal.ZERO));
+    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(MUSIC_CD), BigDecimal.ZERO));
     Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(shoppingCart.size(), receipt.size());
+    assertEquals(2, receipt.size());
+    Mockito.verify(receiptItemFactory, times(2)).getReceiptItem(any(ShoppingCartItem.class));
   }
 
-  @Test
-  public void testItemsWithoutTaxesApplied() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(BASICTAX_FREE_ITEM), BigDecimal.ONE));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(BigDecimal.ONE, receipt.getTotal());
-  }
-
-  @Test
-  public void testImportedExemptItems() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newImportedItem(BASICTAX_FREE_ITEM), new BigDecimal("11.25")));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(new BigDecimal("11.85"), receipt.getTotal());
-  }
-
-  @Test
-  public void testBasicSalesTaxItems() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newItem(TAXED_ITEM), new BigDecimal("18.99")));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(new BigDecimal("20.89"), receipt.getTotal());
-  }
-
-  @Test
-  public void testImportedItemsNotExempt() {
-    ShoppingCart shoppingCart = new ShoppingCart();
-    shoppingCart.addItem(ShoppingCartItem.of(1, Item.newImportedItem(TAXED_ITEM), new BigDecimal("47.50")));
-    Receipt receipt = sut.createReceipt(shoppingCart);
-    assertEquals(new BigDecimal("54.65"), receipt.getTotal());
-  }
 }
