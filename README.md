@@ -1,4 +1,4 @@
-https://travis-ci.org/alefra86/sales-taxes.svg?branch=master
+[![Build Status](https://travis-ci.org/alefra86/sales-taxes.svg?branch=master)](https://travis-ci.org/alefra86/sales-taxes)
 
 # Sales Taxes
 
