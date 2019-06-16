@@ -13,13 +13,17 @@ import java.nio.file.Paths;
 public class Main {
 
   public static void main(String[] args) {
+    if (args.length == 0) {
+      System.err.println("Please provide a path to a file input. You can find some example in data folder.");
+      System.exit(0);
+    }
     StubCategoryRepository categoryRepository = new StubCategoryRepository();
     SalesTaxes salesTaxes = new SalesTaxes(new DefaultShoppingCartParser(categoryRepository),
       new DefaultReceiptService(new DefaultReceiptItemFactory(categoryRepository)));
     try {
       System.out.println(salesTaxes.printReceipt(loadFile(args[0])));
     } catch (FileNotFoundException e) {
-      System.out.println("File not found");
+      System.err.println("File not found");
       System.exit(0);
     }
   }
