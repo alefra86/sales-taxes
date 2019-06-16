@@ -14,12 +14,12 @@ import org.junit.Test;
 
 public class SalesTaxesTest {
 
-  private SalesTaxes sut;
+  private SalesTaxesController sut;
 
   @Before
   public void setUp() {
     StubCategoryRepository categoryRepository = new StubCategoryRepository();
-    sut = new SalesTaxes(new DefaultShoppingCartParser(categoryRepository),
+    sut = new SalesTaxesController(new DefaultShoppingCartParser(categoryRepository),
       new DefaultReceiptService(new DefaultReceiptItemFactory(categoryRepository)));
   }
 

@@ -7,12 +7,12 @@ import java.io.InputStream;
 /**
  * Print a receipt
  */
-public class SalesTaxes {
+public class SalesTaxesController {
 
   private final ShoppingCartParser shoppingCartParser;
   private final ReceiptService receiptService;
 
-  public SalesTaxes(ShoppingCartParser shoppingCartParser, ReceiptService receiptService) {
+  public SalesTaxesController(ShoppingCartParser shoppingCartParser, ReceiptService receiptService) {
     this.shoppingCartParser = shoppingCartParser;
     this.receiptService = receiptService;
   }

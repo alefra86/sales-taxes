@@ -18,10 +18,10 @@ public class Main {
       System.exit(0);
     }
     StubCategoryRepository categoryRepository = new StubCategoryRepository();
-    SalesTaxes salesTaxes = new SalesTaxes(new DefaultShoppingCartParser(categoryRepository),
+    SalesTaxesController salesTaxesController = new SalesTaxesController(new DefaultShoppingCartParser(categoryRepository),
       new DefaultReceiptService(new DefaultReceiptItemFactory(categoryRepository)));
     try {
-      System.out.println(salesTaxes.printReceipt(loadFile(args[0])));
+      System.out.println(salesTaxesController.printReceipt(loadFile(args[0])));
     } catch (FileNotFoundException e) {
       System.err.println("File not found");
       System.exit(0);
