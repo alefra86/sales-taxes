@@ -8,17 +8,15 @@ import com.franchini.salestaxes.datamodel.Receipt;
 import com.franchini.salestaxes.datamodel.ShoppingCart;
 import com.franchini.salestaxes.datamodel.ShoppingCartItem;
 import com.franchini.salestaxes.repository.StubCategoryRepository;
-import com.franchini.salestaxes.service.DefaultReceiptService;
-import com.franchini.salestaxes.service.ReceiptService;
 import java.math.BigDecimal;
 import org.junit.Test;
 
-public class ReceiptServiceTest {
+public class DefaultReceiptServiceTest {
 
   public static final String BASICTAX_FREE_ITEM = "book";
   public static final String TAXED_ITEM = "music CD";
 
-  private ReceiptService sut = new DefaultReceiptService(new DefaultReceiptItemFactory(new StubCategoryRepository()));
+  private DefaultReceiptService sut = new DefaultReceiptService(new DefaultReceiptItemFactory(new StubCategoryRepository()));
 
   @Test(expected = IllegalArgumentException.class)
   public void nullShoppingCartThrowsException() {

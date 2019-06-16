@@ -1,0 +1,5 @@
+1 ITEM: 11.00
+1 ITEM2: 11.00
+1 ITEM3: 11.00
+Sales Taxes: 2.85
+Total: 33.00

@@ -24,8 +24,10 @@ public class Receipt {
     return receiptItems.stream().map(ReceiptItem::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
-  @Override
-  public String toString() {
+  public String print() {
+    if (receiptItems.isEmpty()) {
+      throw new IllegalStateException("No items in the receipt");
+    }
     StringBuilder stringBuilder = new StringBuilder();
     receiptItems.forEach(i -> {
       stringBuilder.append(i.getQuantity()).append(" ").append(i.getItem()).append(": ").append(i.getTotalPrice()).append("\n");

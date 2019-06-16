@@ -18,6 +18,6 @@ public class SalesTaxes {
   }
 
   public String printReceipt(InputStream inputStream) {
-    return receiptService.createReceipt(shoppingCartParser.parse(inputStream)).toString();
+    return receiptService.createReceipt(shoppingCartParser.parse(inputStream)).print();
   }
 }
