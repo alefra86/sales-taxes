@@ -1,3 +1,5 @@
+https://travis-ci.org/alefra86/sales-taxes.svg?branch=master
+
 # Sales Taxes
 
 ## Overview
