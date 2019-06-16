@@ -32,6 +32,6 @@ public class TaxFreeReceiptItem implements ReceiptItem {
 
   @Override
   public BigDecimal getTotalPrice() {
-    return getPrice().add(getTax());
+    return getPrice();
   }
 }

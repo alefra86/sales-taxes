@@ -7,6 +7,8 @@ public abstract class TaxedReceiptItemDecorator implements ReceiptItem {
 
   public static final String ROUNDING_VALUE = "0.05";
   private final ReceiptItem receiptItem;
+  private BigDecimal tax;
+  private BigDecimal totalPrice;
 
   TaxedReceiptItemDecorator(ReceiptItem receiptItem) {
     this.receiptItem = receiptItem;
@@ -29,12 +31,18 @@ public abstract class TaxedReceiptItemDecorator implements ReceiptItem {
 
   @Override
   public BigDecimal getTax() {
-    return round(getPrice().multiply(getTaxRate()).divide(new BigDecimal("100"))).add(receiptItem.getTax());
+    if (tax == null) {
+      tax = round(getPrice().multiply(getTaxRate()).divide(new BigDecimal("100"))).add(receiptItem.getTax());
+    }
+    return tax;
   }
 
   @Override
   public BigDecimal getTotalPrice() {
-    return getPrice().add(getTax());
+    if (totalPrice == null) {
+      totalPrice = getPrice().add(getTax());
+    }
+    return totalPrice;
   }
 
   protected abstract BigDecimal getTaxRate();
