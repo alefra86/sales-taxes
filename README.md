@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/alefra86/sales-taxes.svg?branch=master)](https://travis-ci.org/alefra86/sales-taxes)
-
 # Sales Taxes
 
 ## Overview
@@ -32,6 +30,7 @@ The application can be built with this Maven command:
 mvn clean package
 ```
 At this link is available the [CI](https://travis-ci.org/alefra86/sales-taxes).
+[![Build Status](https://travis-ci.org/alefra86/sales-taxes.svg?branch=master)](https://travis-ci.org/alefra86/sales-taxes)
 
 
 ## Example
