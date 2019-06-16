@@ -32,6 +32,12 @@ mvn clean package
 At this link is available the [CI](https://travis-ci.org/alefra86/sales-taxes).
 [![Build Status](https://travis-ci.org/alefra86/sales-taxes.svg?branch=master)](https://travis-ci.org/alefra86/sales-taxes)
 
+## How to run
+The application can be ran with this command:
+```
+java -jar SalesTaxes.jar <path_to_input_file>
+```
+In the data folder there are the three cases provided as example.
 
 ## Example
 
