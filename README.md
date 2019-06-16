@@ -14,13 +14,13 @@ Write an application that prints out the receipt details for these shopping bask
 
 ## Dev Notes
 
-# Input
+### Input
 I suppose to read the input data from a file formatted as the examples provided. The file is parsed and validated by a `Parser` that creates a `ShoppingCart`.
 
-# Output
+### Output
 The output of the application is a string formatted as the examples provided.
 
-## Build and CI
+## Build tool and CI
 The application can be built with this Maven command:
 ```
 mvn clean package
