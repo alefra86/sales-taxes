@@ -1,5 +1,6 @@
 package com.franchini.salestaxes.parser;
 
+import static com.franchini.salestaxes.util.TestUtil.loadFileAsInputStream;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.junit.Assert.assertEquals;
@@ -9,9 +10,7 @@ import com.franchini.salestaxes.datamodel.Item;
 import com.franchini.salestaxes.datamodel.ShoppingCart;
 import com.franchini.salestaxes.datamodel.ShoppingCartItem;
 import com.franchini.salestaxes.repository.StubCategoryRepository;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import org.junit.Test;
 
@@ -21,17 +20,17 @@ public class DefaultShoppingCartParserTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void emptyStreamReturnsException() throws IOException {
-    sut.parse(loadFileAsInputStream("empty.txt"));
+    sut.parse(loadFileAsInputStream(getClass(), "empty.txt", "input"));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void wrongContentReturnsException() throws IOException {
-    sut.parse(loadFileAsInputStream("wrong.txt"));
+    sut.parse(loadFileAsInputStream(getClass(), "wrong.txt", "input"));
   }
 
   @Test
   public void correctContentReturnsShoppingCart() throws IOException {
-    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream("correct.txt"));
+    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream(getClass(), "correct.txt", "input"));
     assertEquals(1, shoppingCart.size());
     assertThat(shoppingCart.getItems().get(0),
       samePropertyValuesAs(ShoppingCartItem.of(1, Item.newItem("bottle of perfume"), new BigDecimal("27.99"))));
@@ -39,7 +38,7 @@ public class DefaultShoppingCartParserTest {
 
   @Test
   public void importedContentCreatedCorrectItems() throws IOException {
-    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream("imported.txt"));
+    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream(getClass(), "imported.txt", "input"));
     assertEquals(2, shoppingCart.size());
     assertThat(shoppingCart.getItems(),
       contains(samePropertyValuesAs(ShoppingCartItem.of(1, Item.newImportedItem("bottle of perfume"), new BigDecimal("27.99"))),
@@ -48,12 +47,12 @@ public class DefaultShoppingCartParserTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void wrongCategoryReturnsException() throws IOException {
-    sut.parse(loadFileAsInputStream("wrong-category.txt"));
+    sut.parse(loadFileAsInputStream(getClass(), "wrong-category.txt", "input"));
   }
 
   @Test
   public void testInput1() throws IOException {
-    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream("input1.txt"));
+    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream(getClass(), "input1.txt", "input"));
     assertEquals(3, shoppingCart.size());
     assertThat(shoppingCart.getItems(),
       contains(samePropertyValuesAs(ShoppingCartItem.of(1, Item.newItem("book"), new BigDecimal("12.49"))),
@@ -63,7 +62,7 @@ public class DefaultShoppingCartParserTest {
 
   @Test
   public void testInput2() throws IOException {
-    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream("input2.txt"));
+    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream(getClass(), "input2.txt", "input"));
     assertEquals(2, shoppingCart.size());
     assertThat(shoppingCart.getItems(),
       contains(samePropertyValuesAs(ShoppingCartItem.of(1, Item.newImportedItem("box of chocolates"), new BigDecimal("10.00"))),
@@ -72,7 +71,7 @@ public class DefaultShoppingCartParserTest {
 
   @Test
   public void testInput3() throws IOException {
-    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream("input3.txt"));
+    ShoppingCart shoppingCart = sut.parse(loadFileAsInputStream(getClass(), "input3.txt", "input"));
     assertEquals(4, shoppingCart.size());
     assertThat(shoppingCart.getItems(),
       contains(samePropertyValuesAs(ShoppingCartItem.of(1, Item.newImportedItem("bottle of perfume"), new BigDecimal("27.99"))),
@@ -81,12 +80,4 @@ public class DefaultShoppingCartParserTest {
         samePropertyValuesAs(ShoppingCartItem.of(1, Item.newImportedItem("box of chocolates"), new BigDecimal("11.25")))));
   }
 
-  private InputStream loadFileAsInputStream(String name) throws IOException {
-    String path = "input" + File.separator + name;
-    InputStream stream = getClass().getClassLoader().getResourceAsStream(path);
-    if (stream == null) {
-      throw new IOException("File: '" + path + "' cannot be found");
-    }
-    return stream;
-  }
 }
