@@ -20,6 +20,10 @@ I suppose to read the input data from a file formatted as the examples provided.
 ### Output
 The output of the application is a string formatted as the examples provided.
 
+### Categories
+Categories are hard-coded in a stub repository. I created a `Map` containing the relationship between items and categories.
+Any input item not recognised by the system cause an Exception.
+
 ## Build tool and CI
 The application can be built with this Maven command:
 ```
