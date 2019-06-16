@@ -12,6 +12,22 @@ paid. The rounding rules for sales tax are that for a tax rate of n%, a shelf pr
 
 Write an application that prints out the receipt details for these shopping baskets...
 
+## Dev Notes
+
+# Input
+I suppose to read the input data from a file formatted as the examples provided. The file is parsed and validated by a `Parser` that creates a `ShoppingCart`.
+
+# Output
+The output of the application is a string formatted as the examples provided.
+
+## Build and CI
+The application can be built with this Maven command:
+```
+mvn clean package
+```
+At this link is available the [CI](https://travis-ci.org/alefra86/sales-taxes).
+
+
 ## Example
 
 **INPUT:**
