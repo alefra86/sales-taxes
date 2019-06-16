@@ -4,7 +4,7 @@ import com.franchini.salestaxes.datamodel.ShoppingCart;
 import java.io.InputStream;
 
 /**
- *
+ * A parser for getting a {@link ShoppingCart} from an {@link InputStream}
  */
 public interface ShoppingCartParser {
 

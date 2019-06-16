@@ -8,7 +8,6 @@ import static org.junit.Assert.assertThat;
 import com.franchini.salestaxes.datamodel.Item;
 import com.franchini.salestaxes.datamodel.ShoppingCart;
 import com.franchini.salestaxes.datamodel.ShoppingCartItem;
-import com.franchini.salestaxes.parser.DefaultShoppingCartParser;
 import com.franchini.salestaxes.repository.StubCategoryRepository;
 import java.io.File;
 import java.io.IOException;
